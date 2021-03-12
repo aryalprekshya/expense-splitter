@@ -6,6 +6,7 @@ export default function Header() {
     <>
       <div>
         <h1> Expense Splitter</h1>
+        <h2>Designed to save your time and money.</h2>
         {/* <NavLink to="/" activeClassName="is-active" >
           Expense Splitter
         </NavLink> */}
