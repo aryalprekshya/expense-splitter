@@ -5,10 +5,11 @@ export default function Header() {
   return (
     <>
       <div>
-        <NavLink to="/" activeClassName="is-active">
+        <h1> Expense Splitter</h1>
+        {/* <NavLink to="/" activeClassName="is-active" >
           Expense Splitter
-        </NavLink>
-        <NavLink to="/" activeClassName="is-active">
+        </NavLink> */}
+        <NavLink to="/" activeClassName="is-active" exact={true}>
           Dashboard
         </NavLink>
         <NavLink to="/add-expense" activeClassName="is-active">
