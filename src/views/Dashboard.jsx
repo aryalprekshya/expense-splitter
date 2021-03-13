@@ -3,11 +3,6 @@ import Month from "../components/component/Month";
 import ExpenseDetails from "../components/component/Expenses";
 
 export default function Dashboard() {
-  // const [paidBy, setPaidBy] = useState("");
-  // const [description, setDescription] = useState("");
-  // const [amount, setAmount] = useState("");
-  // const [date, setDate] = useState(new Date());
-
   const [state, setState] = useState({
     data: {
       paidBy: "Prekshya",
