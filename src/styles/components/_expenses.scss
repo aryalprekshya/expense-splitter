@@ -1,0 +1,25 @@
+.expenses {
+  background: $light-blue;
+  margin-bottom: $xl-size;
+}
+
+.widget__message {
+  color: $off-white;
+  margin: 0;
+  padding: $l-size;
+  text-align: center;
+  border-bottom: 1px solid lighten($light-blue, 10%);
+}
+
+//widget  Header
+.expenses-header {
+  background: $blue;
+  color: $off-white;
+  display: flex;
+  justify-content: space-between;
+  padding: $m-size;
+}
+
+.expenses-header__title {
+  margin: 0;
+}

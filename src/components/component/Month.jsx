@@ -21,5 +21,9 @@ export default function Month() {
     return monthNames[d.getMonth()];
   };
 
-  return <h3> {getMonth()}'s Calculation</h3>;
+  return (
+    <div>
+      <button className="big-button">{getMonth()}'s Calculation</button>
+    </div>
+  );
 }
