@@ -6,12 +6,12 @@ import "firebase/storage";
 import "firebase/functions";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB8mWlMx185PGbSBbNistNeyHu3NTI82RI",
-  authDomain: "expense-splitter-a1ec2.firebaseapp.com",
-  projectId: "expense-splitter-a1ec2",
-  storageBucket: "expense-splitter-a1ec2.appspot.com",
-  messagingSenderId: "78776307761",
-  appId: "1:78776307761:web:bf0eddc3e6cfdf0a860510",
+  apiKey: "AIzaSyAKyfnPzoBMtGjzImXjUc3kyI7q2YegFz8",
+  authDomain: "expense-splitter-e07b8.firebaseapp.com",
+  projectId: "expense-splitter-e07b8",
+  storageBucket: "expense-splitter-e07b8.appspot.com",
+  messagingSenderId: "38198203851",
+  appId: "1:38198203851:web:74bf71db5199913d65d24e",
 };
 
 // Initialize Firebase
