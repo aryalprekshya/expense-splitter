@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { firebase, googleProvider } from "../components/firebase/Firebase";
 import ExpenseContext from "../components/context/ExpenseContext";
+import { history } from "../components/routers/AppRouter";
 
-export default function Login() {
+export default function Login(props) {
   const [expense, expenseDispatch] = useContext(ExpenseContext);
 
   const signInWithGoogle = () => {
@@ -21,6 +22,7 @@ export default function Login() {
             },
           },
         });
+        props.history.push("/dashboard");
       })
       .catch((error) => {
         console.log("Error signing with Google", error.message);
