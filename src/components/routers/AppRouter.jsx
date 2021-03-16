@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch } from "react-router-dom";
+import createHistory from "history/createBrowserHistory";
 
 import ExpenseContext from "../context/ExpenseContext";
 import expenseReducer from "../reducers/ExpenseReducer";
@@ -10,12 +11,14 @@ import AddExpense from "../../views/AddExpense.jsx";
 import NotFoundPage from "../../views/NotFoundPage.jsx";
 import Login from "../../views/Login";
 
+export const history = createHistory();
+
 export default function AppRouter() {
   const [expense, expenseDispatch] = useReducer(expenseReducer, {
     expense: [],
   });
   return (
-    <BrowserRouter>
+    <Router history={history}>
       <ExpenseContext.Provider value={[expense, expenseDispatch]}>
         <Header />
         <Switch>
@@ -26,6 +29,6 @@ export default function AppRouter() {
           <Route component={NotFoundPage} />
         </Switch>
       </ExpenseContext.Provider>
-    </BrowserRouter>
+    </Router>
   );
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
+import { Logout } from "../firebase/Auth";
 
 export default function Header() {
   return (
@@ -21,6 +22,7 @@ export default function Header() {
               >
                 Add Expense
               </NavLink>
+              <button onClick={Logout}>Logout</button>
             </div>
           </div>
         </div>

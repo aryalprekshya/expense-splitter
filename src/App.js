@@ -1,7 +1,7 @@
 import React from "react";
 import "normalize.css/normalize.css";
 import "./styles/styles.scss";
-import AppRouter from "./components/routers/AppRouter";
+import AppRouter, { history } from "./components/routers/AppRouter";
 // import firebase from "./components/firebase/Firebase";
 import firebase from "firebase/app";
 
@@ -15,9 +15,12 @@ function App() {
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
-    console.log("Log in");
+    // console.log("Log in");
+    if (history.location.pathname === "/") {
+      history.push("/dashboard");
+    }
   } else {
-    console.log("Logged out");
+    history.push("/");
   }
 });
 

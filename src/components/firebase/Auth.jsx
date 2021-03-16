@@ -1,7 +1,7 @@
 import { firebase, googleProvider } from "../firebase/Firebase";
 
 //sign in with google account
-const signInWithGoogle = () => {
+export const signInWithGoogle = () => {
   firebase
     .auth()
     .signInWithPopup(googleProvider)
@@ -15,4 +15,7 @@ const signInWithGoogle = () => {
     });
 };
 
-export default signInWithGoogle;
+//logOut from the website
+export const Logout = () => {
+  return firebase.auth().signOut();
+};
