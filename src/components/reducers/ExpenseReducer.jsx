@@ -1,5 +1,9 @@
 const ExpenseReducer = (state, action) => {
+  console.log(action.payload.user);
   switch (action.type) {
+    case "SET_USER_INFO":
+      return { ...state, user: action.payload.user };
+
     case "ADD_EXPENSE":
       return null;
 

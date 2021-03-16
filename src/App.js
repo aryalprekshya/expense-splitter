@@ -15,7 +15,6 @@ function App() {
 
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
-    console.log("uid: ", user.uid);
     if (history.location.pathname === "/") {
       history.push("/dashboard");
     }
