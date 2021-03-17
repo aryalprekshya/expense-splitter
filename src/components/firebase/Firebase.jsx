@@ -15,11 +15,16 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app();
+}
 
 const db = firebase.database();
+const fs = firebase.firestore();
 const auth = firebase.auth();
 const store = firebase.storage();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 
-export { db, auth, store, googleProvider, firebase };
+export { db, fs, auth, store, googleProvider, firebase };
