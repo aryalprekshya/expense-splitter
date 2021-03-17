@@ -1,7 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Expense from "./Expense";
+import { fs } from "../firebase/Firebase";
 
 export default function Expenses(props) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [expenseList, setExpenseList] = useState([]);
+
+  let expenseDataRef = null;
+
+  useEffect(() => {
+    expenseDataRef = fs.collection("expenses");
+    fetchExpense();
+  }, []);
+
+  const fetchExpense = () => {
+    setIsLoading(true);
+    let tempList = [];
+    expenseDataRef
+      .get()
+      .then((snapshot) => {
+        snapshot.forEach((doc) => {
+          let list = doc.data();
+          tempList.push(list);
+        });
+        console.log(tempList);
+        return tempList;
+      })
+      .then((tempList) => {
+        setExpenseList(tempList);
+        setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log("Error getting the documents", err);
+      });
+  };
+
   return (
     <div>
       <div className="expenses-header">
@@ -14,8 +47,9 @@ export default function Expenses(props) {
           Remove All
         </button>
       </div>
-
-      <Expense expenseData={props.details} />
+      {expenseList.map((expense) => {
+        return <Expense expense={expense} />;
+      })}
     </div>
   );
 }

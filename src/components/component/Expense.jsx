@@ -1,12 +1,13 @@
 import React from "react";
 
 export default function Expense(props) {
+  console.log(props);
+  console.log(props.expense.description);
   return (
     <div className="expense">
       <p className="expense__text">
-        {/* {console.log(props)}
-        {props.expenseData.paidBy}. {props.expenseData.description},{" "}
-        {props.expenseData.amount}, {props.expenseData.date} */}
+        {props.expense.description}, {props.expense.paidAmount},{" "}
+        {props.expense.paidBy}{" "}
       </p>
     </div>
   );
