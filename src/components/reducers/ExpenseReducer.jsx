@@ -5,7 +5,10 @@ const ExpenseReducer = (state, action) => {
       return { ...state, user: action.payload.user };
 
     case "ADD_EXPENSE":
-      return null;
+      return {
+        ...state,
+        expenses: action.payload.expense,
+      };
 
     case "EDIT_EXPENSE":
       return null;

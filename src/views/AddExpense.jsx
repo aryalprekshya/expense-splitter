@@ -1,13 +1,39 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import ExpenseContext from "../components/context/ExpenseContext";
+import { fs } from "../components/firebase/Firebase";
 
 export default function AddExpense() {
+  const [expense, expenseDispatch] = useContext(ExpenseContext);
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [paidBy, setPaidBy] = useState("");
   const [paidDate, setPaidDate] = useState(new Date());
 
-  const handleAddExpense = () => {
-    console.log("Add expense button is clicked");
+  const handleAddExpense = (e) => {
+    e.preventDefault();
+
+    let dataToSend = {
+      description: description,
+      paidAmount: amount,
+      paidBy: paidBy,
+      paidDate: paidDate,
+      createdAt: new Date(),
+    };
+
+    expenseDispatch({
+      type: "ADD_EXPENSE",
+      payload: { expense: dataToSend },
+    });
+
+    //adding expense data to firebase
+    fs.collection("expenses")
+      .add(dataToSend)
+      .then(() => {
+        console.log("Expense successfully added to firebase");
+      })
+      .catch((error) => {
+        console.log("Error while adding data to firebase", error);
+      });
   };
 
   return (
