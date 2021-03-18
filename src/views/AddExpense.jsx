@@ -2,13 +2,16 @@ import React, { useContext, useState } from "react";
 import ExpenseContext from "../components/context/ExpenseContext";
 import { fs } from "../components/firebase/Firebase";
 import { FormGroup, FormText } from "reactstrap";
+import SweetAlert from "react-bootstrap-sweetalert";
 
-export default function AddExpense() {
+export default function AddExpense(props) {
   const [expense, expenseDispatch] = useContext(ExpenseContext);
   const [description, setDescription] = useState("");
   const [amount, setAmount] = useState("");
   const [paidBy, setPaidBy] = useState("");
   const [paidDate, setPaidDate] = useState(new Date());
+  const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState(null);
 
   //For error handling
   const [error, setError] = useState({
@@ -86,15 +89,31 @@ export default function AddExpense() {
       payload: { expense: dataToSend },
     });
 
-    //adding expense data to firebase
+    //adding expense to firebase
     fs.collection("expenses")
       .add(dataToSend)
       .then(() => {
         console.log("Expense successfully added to firebase");
+        setAlert(
+          <SweetAlert
+            success
+            title={"Expense added successful"}
+            timeout={1500}
+            onConfirm={hideAlert}
+          />
+        );
       })
+      // .then(() => {
+      //   props.history.push("/dashboard");
+      // })
       .catch((error) => {
         console.log("Error while adding data to firebase", error);
       });
+  };
+
+  const hideAlert = () => {
+    setIsLoading(false);
+    setAlert(null);
   };
 
   return (
@@ -151,6 +170,7 @@ export default function AddExpense() {
             <button onClick={handleCheckErrors}>Add Expense</button>
           </form>
         </div>
+        {alert}
       </div>
     </>
   );
