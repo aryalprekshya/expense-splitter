@@ -20,7 +20,9 @@ export default function Expenses(props) {
       .get()
       .then((snapshot) => {
         snapshot.forEach((doc) => {
-          let list = doc.data();
+          let docId = doc.id;
+          //console.log(docId);
+          let list = { docId, ...doc.data() };
           tempList.push(list);
         });
         console.log(tempList);

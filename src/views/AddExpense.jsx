@@ -66,7 +66,7 @@ export default function AddExpense() {
     if (hasError) {
       setError({ ...error, ...tempError });
     } else {
-      handleAddExpense();
+      handleAddExpense(e);
     }
   };
 
