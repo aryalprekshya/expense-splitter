@@ -66,6 +66,7 @@ export default function Expenses(props) {
             timeout={1500}
           />
         );
+        setModal(!modal);
       })
       .catch((error) => {
         console.log("Error deleting all expenses", error);
@@ -81,7 +82,7 @@ export default function Expenses(props) {
           Delete All
         </button>
 
-        {/* Delete modal*/}
+        {/* Delete all expenses modal*/}
         <>
           <Modal isOpen={modal} toggle={toggle}>
             <ModalHeader toggle={toggle}>Delete all expenses</ModalHeader>

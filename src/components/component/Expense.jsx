@@ -1,16 +1,27 @@
 import React, { useState } from "react";
-import { Button } from "reactstrap";
 import { fs } from "../firebase/Firebase";
 import EditModal from "./EditModal";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import SweetAlert from "react-bootstrap-sweetalert";
 
 export default function Expense(props) {
   let expenseDataRef = null;
-  const [isOpen, setIsOpen] = useState(false);
+  const [alert, setAlert] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleEdit = (e) => {
-    //e.preventDefault();
+  const [isOpen, setIsOpen] = useState(false);
+  const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
+
+  const handleEdit = () => {
     console.log("edit button clicked", isOpen);
     setIsOpen(!isOpen);
+  };
+
+  const hideAlert = () => {
+    setIsLoading(false);
+    setAlert(null);
   };
 
   const handleDelete = (Id) => {
@@ -20,10 +31,22 @@ export default function Expense(props) {
       .delete()
       .then(() => {
         console.log("Expense Deleted successfully");
+        setAlert(
+          <SweetAlert
+            title={"Expense successfully deleted"}
+            onConfirm={hideAlert}
+            timeout={1500}
+          />
+        );
+        setModal(!modal);
       })
       .catch((error) => {
         console.log("Error deleting expense", error);
       });
+  };
+
+  const handleDeleteModal = () => {
+    setModal(!modal);
   };
 
   return (
@@ -45,11 +68,33 @@ export default function Expense(props) {
           </Button>
           <Button
             onClick={() => {
-              handleDelete(props.expense.docId);
+              handleDeleteModal();
             }}
           >
             Delete
           </Button>
+          {/* Delete a single expense modal*/}
+          <div>
+            <Modal isOpen={modal} toggle={toggle}>
+              <ModalHeader toggle={toggle}>Delete Expense</ModalHeader>
+              <ModalBody>
+                Are you sure you want to delete this expense?
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="primary"
+                  onClick={() => {
+                    handleDelete(props.expense.docId);
+                  }}
+                >
+                  Confirm
+                </Button>{" "}
+                <Button color="secondary" onClick={toggle}>
+                  Cancel
+                </Button>
+              </ModalFooter>
+            </Modal>
+          </div>
         </div>
       </div>
       {isOpen && (
