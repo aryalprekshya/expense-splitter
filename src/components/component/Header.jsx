@@ -1,35 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import { Logout } from "../firebase/Auth";
+import ExpenseContext from "../context/ExpenseContext";
 
 export default function Header() {
+  const [expense, expenseDispatch] = useContext(ExpenseContext);
+  console.log(expense);
   return (
     <>
       <div className="header">
         <div className="container">
           <div className="header_container">
-            <div>
-              <h1 className="header__title"> Expense Splitter</h1>
-              <h2 className="header__subtitle">
-                Designed to save your time and money.
-              </h2>
-            </div>
-            <div className="header_add-expense">
-              <NavLink
-                to="/add-expense"
-                activeClassName="is-active"
-                className="header_add-expense__text"
-              >
-                Add Expense
+            {/* if logged in redirect to dashboard if not logged in redirects to
+            login page */}
+            {expense.user.uid ? (
+              <NavLink to="/dashboard">
+                <h1 className="header__title"> Expense Splitter</h1>
               </NavLink>
+            ) : (
+              <NavLink to="/">
+                <h1 className="header__title"> Expense Splitter</h1>
+              </NavLink>
+            )}
+            {/* <h1 className="header__title"> Expense Splitter</h1> */}
+            <div className="header_add-expense">
               <button onClick={Logout}>Logout</button>
             </div>
           </div>
         </div>
-
-        {/* <NavLink to="/" activeClassName="is-active" >
-          Expense Splitter
-        </NavLink> */}
       </div>
     </>
   );

@@ -17,6 +17,7 @@ export const history = createBrowserHistory();
 export default function AppRouter() {
   const [expense, expenseDispatch] = useReducer(expenseReducer, {
     expenses: [],
+    user: [],
   });
   return (
     <Router history={history}>

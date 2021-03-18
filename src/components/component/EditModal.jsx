@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Form, FormGroup, FormText } from "reactstrap";
 import { fs } from "../firebase/Firebase";
 
-const EditModal = ({ data, isModelOpen }) => {
+const EditModal = ({ data, isModalOpen, onClose }) => {
   const [description, setDescription] = useState(data.expense.description);
   const [amount, setAmount] = useState(data.expense.paidAmount);
   const [paidBy, setPaidBy] = useState(data.expense.paidBy);
@@ -11,6 +11,10 @@ const EditModal = ({ data, isModelOpen }) => {
 
   const [modal, setModal] = useState(true);
   const toggle = () => setModal(!modal);
+
+  useEffect(() => {
+    onClose && !modal && onClose();
+  }, [modal]);
 
   //For error handling
   const [error, setError] = useState({
@@ -84,93 +88,87 @@ const EditModal = ({ data, isModelOpen }) => {
       createdAt: new Date(),
     };
 
-    // expenseDispatch({
-    //   type: "ADD_EXPENSE",
-    //   payload: { expense: dataToSend },
-    // });
-
-    // adding expense data to firebase
+    // updating expense data to firebase
     fs.collection("expenses")
       .doc(`/${docId}`)
       .update(dataToSend)
       .then(() => {
         console.log("Expense successfully updated");
+        onClose();
       })
+
       .catch((error) => {
         console.log("Error while updating expense", error);
       });
   };
 
   return (
-    console.log(data),
-    (
-      <div>
-        <Modal isOpen={isModelOpen && modal} toggle={toggle}>
-          <ModalHeader toggle={toggle}>Edit Expense</ModalHeader>
-          <ModalBody>
-            <Form>
-              <FormGroup>
-                <label>Description</label>
-                <input
-                  type="text"
-                  value={description}
-                  onChange={(e) => {
-                    setDescription(e.target.value);
-                    // setError({ ...error, descriptionError: "" });
-                  }}
-                />
-                {/* <FormText>{error.descriptionError}</FormText> */}
-              </FormGroup>
-              <FormGroup>
-                <label>Amount</label>
-                <input
-                  type="number"
-                  min={1}
-                  value={amount}
-                  onChange={(e) => {
-                    setAmount(e.target.value);
-                    // setError({ ...error, amountError: "" });
-                  }}
-                />
-                {/* <FormText>{error.amountError}</FormText> */}
-              </FormGroup>
-              <FormGroup>
-                <label>Paid By</label>
-                <input
-                  type="text"
-                  value={paidBy}
-                  onChange={(e) => {
-                    setPaidBy(e.target.value);
-                    // setError({ ...error, paidByError: "" });
-                  }}
-                />
-                {/* <FormText>{error.paidByError}</FormText> */}
-              </FormGroup>
-              <FormGroup>
-                <label>Paid Date</label>
-                <input
-                  type="date"
-                  value={paidDate}
-                  onChange={(e) => {
-                    setPaidDate(e.target.value);
-                    // setError({ ...error, paidDateError: "" });
-                  }}
-                />
-                {/* <FormGroup>{error.paidDateError}</FormGroup> */}
-              </FormGroup>
-            </Form>
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={handleCheckErrors}>
-              Update Expense
-            </Button>{" "}
-            <Button color="secondary" onClick={toggle}>
-              Cancel
-            </Button>
-          </ModalFooter>
-        </Modal>
-      </div>
-    )
+    <div>
+      <Modal isOpen={modal}>
+        <ModalHeader toggle={toggle}>Edit Expense</ModalHeader>
+        <ModalBody>
+          <Form>
+            <FormGroup>
+              <label>Description</label>
+              <input
+                type="text"
+                value={description}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                  setError({ ...error, descriptionError: "" });
+                }}
+              />
+              <FormText>{error.descriptionError}</FormText>
+            </FormGroup>
+            <FormGroup>
+              <label>Amount</label>
+              <input
+                type="number"
+                min={1}
+                value={amount}
+                onChange={(e) => {
+                  setAmount(e.target.value);
+                  setError({ ...error, amountError: "" });
+                }}
+              />
+              <FormText>{error.amountError}</FormText>
+            </FormGroup>
+            <FormGroup>
+              <label>Paid By</label>
+              <input
+                type="text"
+                value={paidBy}
+                onChange={(e) => {
+                  setPaidBy(e.target.value);
+                  setError({ ...error, paidByError: "" });
+                }}
+              />
+              <FormText>{error.paidByError}</FormText>
+            </FormGroup>
+            <FormGroup>
+              <label>Paid Date</label>
+              <input
+                type="date"
+                value={paidDate}
+                onChange={(e) => {
+                  setPaidDate(e.target.value);
+                  setError({ ...error, paidDateError: "" });
+                }}
+              />
+              <FormGroup>{error.paidDateError}</FormGroup>
+            </FormGroup>
+          </Form>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={handleCheckErrors}>
+            Update Expense
+          </Button>{" "}
+          <Button color="secondary" onClick={toggle}>
+            Cancel
+          </Button>
+        </ModalFooter>
+      </Modal>
+    </div>
   );
 };
 export default EditModal;

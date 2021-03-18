@@ -27,30 +27,39 @@ export default function Expense(props) {
   };
 
   return (
-    <div className="expense">
-      <div className="expense__text">
-        <p>
-          {props.expense.description}, {props.expense.paidAmount},{" "}
-          {props.expense.paidBy}{" "}
-        </p>
+    <>
+      <div className="expense">
+        <div className="expense__text">
+          <p>
+            {props.expense.description}, {props.expense.paidAmount},{" "}
+            {props.expense.paidBy}{" "}
+          </p>
+        </div>
+        <div>
+          <Button
+            onClick={(e) => {
+              handleEdit(e);
+            }}
+          >
+            Edit
+          </Button>
+          <Button
+            onClick={() => {
+              handleDelete(props.expense.docId);
+            }}
+          >
+            Delete
+          </Button>
+        </div>
       </div>
-      <div>
-        <Button
-          onClick={(e) => {
-            handleEdit(e);
+      {isOpen && (
+        <EditModal
+          data={props}
+          onClose={() => {
+            setIsOpen(false);
           }}
-        >
-          Edit
-        </Button>
-        <Button
-          onClick={() => {
-            handleDelete(props.expense.docId);
-          }}
-        >
-          Delete
-        </Button>
-      </div>
-      <EditModal data={props} isModelOpen={isOpen} />
-    </div>
+        />
+      )}
+    </>
   );
 }

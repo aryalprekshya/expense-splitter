@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Expense from "./Expense";
 import { fs } from "../firebase/Firebase";
+import { Button } from "reactstrap";
+import { NavLink } from "react-router-dom";
 
 export default function Expenses(props) {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +23,6 @@ export default function Expenses(props) {
       .then((snapshot) => {
         snapshot.forEach((doc) => {
           let docId = doc.id;
-          //console.log(docId);
           let list = { docId, ...doc.data() };
           tempList.push(list);
         });
@@ -52,6 +53,14 @@ export default function Expenses(props) {
       {expenseList.map((expense, i) => {
         return <Expense key={i} expense={expense} />;
       })}
+
+      <NavLink
+        to="/add-expense"
+        activeClassName="is-active"
+        className="header_add-expense__text"
+      >
+        <Button>Add New Expense</Button>
+      </NavLink>
     </div>
   );
 }
