@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "reactstrap";
 import { fs } from "../firebase/Firebase";
+import EditModal from "./EditModal";
 
 export default function Expense(props) {
   let expenseDataRef = null;
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleEdit = (e) => {
+    //e.preventDefault();
+    console.log("edit button clicked", isOpen);
+    setIsOpen(!isOpen);
+  };
 
   const handleDelete = (Id) => {
     expenseDataRef = fs.collection("expenses");
@@ -27,7 +35,13 @@ export default function Expense(props) {
         </p>
       </div>
       <div>
-        <Button>Edit</Button>
+        <Button
+          onClick={(e) => {
+            handleEdit(e);
+          }}
+        >
+          Edit
+        </Button>
         <Button
           onClick={() => {
             handleDelete(props.expense.docId);
@@ -36,6 +50,7 @@ export default function Expense(props) {
           Delete
         </Button>
       </div>
+      <EditModal data={props} isModelOpen={isOpen} />
     </div>
   );
 }

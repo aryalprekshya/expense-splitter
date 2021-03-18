@@ -8,6 +8,7 @@ import expenseReducer from "../reducers/ExpenseReducer";
 import Header from "../component/Header";
 import Dashboard from "../../views/Dashboard.jsx";
 import AddExpense from "../../views/AddExpense.jsx";
+import EditExpense from "../../views/EditExpense.jsx";
 import NotFoundPage from "../../views/NotFoundPage.jsx";
 import Login from "../../views/Login";
 
@@ -25,7 +26,7 @@ export default function AppRouter() {
           <Route path="/" component={Login} exact={true} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/add-expense" component={AddExpense} />
-          <Route path="/edit/:id" component={AddExpense} />
+          <Route path="/edit-expense/:id" component={EditExpense} />
           <Route component={NotFoundPage} />
         </Switch>
       </ExpenseContext.Provider>

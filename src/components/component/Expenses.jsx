@@ -49,8 +49,8 @@ export default function Expenses(props) {
           Remove All
         </button>
       </div>
-      {expenseList.map((expense) => {
-        return <Expense expense={expense} />;
+      {expenseList.map((expense, i) => {
+        return <Expense key={i} expense={expense} />;
       })}
     </div>
   );
