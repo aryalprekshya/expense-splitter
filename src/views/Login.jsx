@@ -55,7 +55,7 @@ export default function Login(props) {
           uid: result.user.uid,
         };
         addUserToFirebase(dataToSend);
-        props.history.push("/dashboard");
+        props.history.push("/add-second-user");
       })
       .catch((error) => {
         console.log("Error signing with Google", error.message);

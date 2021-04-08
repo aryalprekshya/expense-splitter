@@ -11,6 +11,7 @@ import AddExpense from "../../views/AddExpense.jsx";
 import EditExpense from "../../views/EditExpense.jsx";
 import NotFoundPage from "../../views/NotFoundPage.jsx";
 import Login from "../../views/Login";
+import AddSecondUser from "../../views/AddSecondUser";
 
 export const history = createBrowserHistory();
 
@@ -18,6 +19,7 @@ export default function AppRouter() {
   const [expense, expenseDispatch] = useReducer(expenseReducer, {
     expenses: [],
     user: [],
+    secondUserEmail: null,
   });
   return (
     <Router history={history}>
@@ -26,6 +28,7 @@ export default function AppRouter() {
         <Switch>
           <Route path="/" component={Login} exact={true} />
           <Route path="/dashboard" component={Dashboard} />
+          <Route path="/add-second-user" component={AddSecondUser} />
           <Route path="/add-expense" component={AddExpense} />
           <Route path="/edit-expense/:id" component={EditExpense} />
           <Route component={NotFoundPage} />
